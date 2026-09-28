@@ -1,1 +1,68 @@
 
+╔══════════════════════════════════════════════════════════╗
+║        JAVA SETUP & FIRST PROGRAM — QUICK NOTES          ║
+╚══════════════════════════════════════════════════════════╝
+
+1. INSTALL JAVA
+   winget install Microsoft.OpenJDK.21
+
+2. SET ENVIRONMENT (auto-detect folder)
+   $jdkPath = (Get-ChildItem "C:\Program Files\Microsoft\" -Filter "jdk-*" -Directory | Select-Object -First 1).FullName
+   [Environment]::SetEnvironmentVariable("JAVA_HOME", $jdkPath, "User")
+   $oldPath = [Environment]::GetEnvironmentVariable("Path", "User")
+   [Environment]::SetEnvironmentVariable("Path", "$jdkPath\bin;$oldPath", "User")
+
+   → Close PowerShell. Open a NEW window.
+
+3. VERIFY
+   java -version
+   javac -version
+   where.exe java
+
+4. CREATE FOLDER + FILE
+   mkdir C:\Users\rkrev\javatest
+   cd C:\Users\rkrev\javatest
+   notepad MyFirstProgram.java
+
+5. CODE
+   public class MyFirstProgram {
+       public static void main(String[] args) {
+           System.out.println("Hello, this is my first Java program!");
+       }
+   }
+
+6. SAVE (Ctrl+S) → close Notepad
+
+7. CHECK FILE
+   dir
+   → must show MyFirstProgram.java (NOT .java.txt)
+
+8. COMPILE
+   javac MyFirstProgram.java
+   → silent = success
+
+9. RUN
+   java MyFirstProgram
+   → prints: Hello, this is my first Java program!
+
+
+────────────────────────────────────────────────────────────
+KEY RULES
+────────────────────────────────────────────────────────────
+• cd "path" changes folders — bare path does NOT.
+• Quote paths with spaces.
+• Env vars apply only to NEW PowerShell windows.
+• javac is silent on success.
+• Class name = filename (case-sensitive).
+• java X (no extension).
+• Create .java via notepad, never by renaming .txt.
+• Desktop on this PC is inside OneDrive.
+
+────────────────────────────────────────────────────────────
+QUICK ERRORS
+────────────────────────────────────────────────────────────
+• "not recognized"        → PATH wrong / old window
+• "file not found"        → wrong folder or .java.txt
+• "should be declared in" → filename ≠ class name
+• "Could not find main"   → compile first (javac)
+• "Invalid filename:*"    → PowerShell ≠ wildcards
